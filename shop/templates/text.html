@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+</head>
+<body>
+    <header>
+        <h1>Product List</h1>
+    </header>
+
+    <main>
+        <!-- Display Categories and Sub-Categories -->
+        <section>
+            <h2>Categories</h2>
+            <ul>
+                {% for category in categories %}
+                    <li>
+                        <h3>{{ category.name }}</h3>
+                        <p>{{ category.description }}</p>
+
+                        <!-- Display Sub-Categories -->
+                        <ul>
+                            {% for sub_category in category.sub_categories.all %}
+                                <li>
+                                    <h4>{{ sub_category.name }}</h4>
+                                    <p>{{ sub_category.description }}</p>
+
+                                    <!-- Display Products under each Sub-Category -->
+                                    <ul>
+                                        {% for product in sub_category.products.all %}
+                                            <li>
+                                                <h5>{{ product.name }}</h5>
+                                                <p>{{ product.description }}</p>
+                                                <p>Price: ${{ product.price }}</p>
+                                                <p>Available: {{ product.available|yesno:"Yes,No" }}</p>
+                                                {% if product.image %}
+                                                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Company Name</p>
+    </footer>
+</body>
+</html>
